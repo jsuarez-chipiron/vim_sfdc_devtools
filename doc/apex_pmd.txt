@@ -1,0 +1,6 @@
+*apex_pmd*
+
+Author:  Javier Suárez <https://github.com/jsuarez-chipiron>
+License: Same terms as Vim itself (see |license|)
+
+TODO
