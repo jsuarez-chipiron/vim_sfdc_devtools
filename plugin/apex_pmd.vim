@@ -28,6 +28,3 @@ function! ApexPMDCurrentProject()
 endfunction
 
 autocmd BufWritePost *.cls call ApexPMDBuffer()
-
-let g:pmd_home=''
-let g:ruleset_path=''
