@@ -7,12 +7,12 @@ Apex PMD is a very small and simple plugin to ....
 TODO
 
 ```
-autocmd BufWritePost *.cls call ApexPMD()
+autocmd BufWritePost *.cls call ApexPMDBuffer()
 ```
 
 ## configuration
 
-apex_pmd requires PMD install in your local machine
+apex_pmd requires PMD installed in your local machine
 
 Set global varible to the PMD home path
 
