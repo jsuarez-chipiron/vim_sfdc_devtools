@@ -9,7 +9,7 @@ There are several ways to install this plugin, the easiest one is to leverage a 
 
 ### Using Vim plugin manager - Plug
 
-Plug is a minimalist Vim plugin manager, please follow the installation intructions in this [link]: (https://github.com/junegunn/vim-plug)
+Plug is a minimalist Vim plugin manager, please follow the installation intructions in this [link](https://github.com/junegunn/vim-plug)
 Once the plugin is instaled you need to add following lines to your ~/.vimrc file
 
 ```
@@ -20,7 +20,7 @@ call plug#end()
 
 ## configuration
 
-apex_pmd requires [PMD]: (https://github.com/pmd/pmd/releases/) installed in your local machine
+apex_pmd requires [PMD](https://github.com/pmd/pmd/releases/) installed in your local machine
 
 Add following variables to your vimrc
 
