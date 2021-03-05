@@ -1,5 +1,6 @@
-# apex_pmd
+# vim_sfdc_devtools
 
+TODO: refrase this paragraph
 Apex PMD is a very small and simple plugin to lint PMD violations on Apex files. Currently the plugin shows the list of violation in a quickfix table on saving an apex file. 
 
 We are working on releasing new exiting features in the near future :wink:
