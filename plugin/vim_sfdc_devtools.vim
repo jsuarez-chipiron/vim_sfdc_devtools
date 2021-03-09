@@ -1,3 +1,5 @@
+" Function declarations
+
 function! ApexPMDInternal(path)
 
     let current_path = a:path
@@ -29,11 +31,33 @@ endfunction
 
 function! CsfQuery(query)
     normal G
-    silent execute "read !sfdx force:data:soql:query -q '" . a:query . "' | grep -v 'Total number'"
+    silent execute "read !sfdx force:data:soql:query -q '" . a:query . "'"
     execute "normal ?Querying Data\<CR>"
     normal dd
+    execute "normal ?Total number\<CR>"
+    normal "udd
+    call timer_start(50, {-> execute("call PrintCsfQueryResult()", "")})
 endfunction
 
+function! PrintCsfQueryResult()
+    echo getreg("u")
+endfunction
+
+function! CsfQueryRangeInternal() range
+    let i = a:firstline
+    let val = ""
+    while i <= a:lastline
+        let val .= getline(i)
+        let i += 1
+    endwhile
+
+    call CsfQuery(val)
+
+endfunction
+
+" Command declarations
+command! -range CsfQueryRange <line1>,<line2>call CsfQueryRangeInternal()
 command! -nargs=1  CsfQuery  call CsfQuery(<f-args>)
 
 autocmd BufWritePost *.cls call ApexPMDBuffer()
+
