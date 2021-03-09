@@ -27,4 +27,13 @@ function! ApexPMDCurrentProject()
 
 endfunction
 
+function! CsfQuery(query)
+    normal G
+    silent execute "read !sfdx force:data:soql:query -q '" . a:query . "' | grep -v 'Total number'"
+    normal ?Querying Data
+    normal dd
+endfunction
+
+command! -nargs=1  CsfQuery  call CsfQuery(<f-args>)
+
 autocmd BufWritePost *.cls call ApexPMDBuffer()
