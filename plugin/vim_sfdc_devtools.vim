@@ -30,7 +30,7 @@ endfunction
 function! CsfQuery(query)
     normal G
     silent execute "read !sfdx force:data:soql:query -q '" . a:query . "' | grep -v 'Total number'"
-    normal ?Querying Data
+    execute "normal ?Querying Data\<CR>"
     normal dd
 endfunction
 
