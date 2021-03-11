@@ -29,14 +29,19 @@ function! ApexPMDCurrentProject()
 endfunction
 
 function! CsfQuery(query)
-    normal G
     echo "Running Query..."
-    silent execute "read !sfdx force:data:soql:query -q \"" . a:query . "\""
+    let query = substitute(a:query, "!", "\\\\!", "g")
+    silent execute "read !sfdx force:data:soql:query -q \"" . query . "\""
     execute "normal ?Querying Data\<CR>"
     normal dd
     execute "normal ?Total number\<CR>"
     normal "udd
     call timer_start(50, {-> execute("call PrintCsfQueryResult()", "")})
+endfunction
+
+function! CsfQueryCmd(query)
+    normal G
+    call CsfQuery(a:query)
 endfunction
 
 function! PrintCsfQueryResult()
@@ -55,32 +60,18 @@ function! CsfQueryRangeInternal() range
 
 endfunction
 
-function! TestInternal() range
+function! CsfAnonymousInternal() range
     let tempFileName = tempname()
-    echo tempFileName
+    echo "Executing Apex Anonymous..."
     call writefile(getline(a:firstline, a:lastline), tempFileName)
     silent execute "read !sfdx force:apex:execute -f " . tempFileName
 
 endfunction
 
-
-function! TestDiff() range
-    let tempFileName = tempname()
-    echo tempFileName
-    call writefile(getline(1, '$'), tempFileName)
-    silent execute "edit " . tempFileName
-    silent execute "%s/\\(.*\\)/\\L\\1/"
-    silent execute "bp!"
-    silent execute "vertical diffsplit " . tempFileName
-    " silent execute "read !sfdx force:apex:execute -f " . tempFileName
-endfunction
-
-
 " Command declarations
-command! -range CsfQueryRange <line1>,<line2>call CsfQueryRangeInternal()
-command! -range Test <line1>,<line2>call TestInternal()
-command! -nargs=1  CsfQuery  call CsfQuery(<f-args>)
+command! -range   CsfQueryRange <line1>,<line2>call CsfQueryRangeInternal()
+command! -range   CsfAnonymous <line1>,<line2>call CsfAnonymousInternal()
+command! -nargs=1 CsfQuery call CsfQueryCmd(<f-args>)
 
 " Autocmd declarations
 autocmd BufWritePost *.cls call ApexPMDBuffer()
-
