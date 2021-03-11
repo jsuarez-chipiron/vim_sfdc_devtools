@@ -30,7 +30,8 @@ endfunction
 
 function! CsfQuery(query)
     normal G
-    silent execute "read !sfdx force:data:soql:query -q '" . a:query . "'"
+    echo "Running Query..."
+    silent execute "read !sfdx force:data:soql:query -q \"" . a:query . "\""
     execute "normal ?Querying Data\<CR>"
     normal dd
     execute "normal ?Total number\<CR>"
