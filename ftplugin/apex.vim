@@ -1,7 +1,7 @@
-if exists("g:isFtApexLoaded")
+if exists("g:isCsfFtApexLoaded")
 	finish
 endif
-let g:isFtApexLoaded=1 
+let g:isCsfFtApexLoaded=1 
 augroup apexgroup 
 	autocmd!
 	autocmd BufWritePost <buffer> call apex#ApexPMDBuffer()
