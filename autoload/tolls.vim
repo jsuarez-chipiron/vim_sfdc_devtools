@@ -7,7 +7,7 @@ let g:isToolsLoaded = 1
 function! tolls#CsfQuery(query)
     echo "Running Query..."
     let query = substitute(a:query, "!", "\\\\!", "g")
-    silent execute "read !sfdx force:data:soql:query -q \"" . query . "\""
+    silent execute "read !sfdx force:data:soql:query -q \"" . query . "\" -u default"
     execute "normal ?Querying Data\<CR>"
     normal dd
     execute "normal ?Total number\<CR>"
@@ -41,6 +41,6 @@ function! tolls#CsfAnonymousInternal() range
     let tempFileName = tempname()
     echo "Executing Apex Anonymous..."
     call writefile(getline(a:firstline, a:lastline), tempFileName)
-    silent execute "read !sfdx force:apex:execute -f " . tempFileName
+    silent execute "read !sfdx force:apex:execute -u default -f " . tempFileName
 endfunction
 "}}}
