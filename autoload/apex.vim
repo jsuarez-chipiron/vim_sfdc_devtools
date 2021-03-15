@@ -1,7 +1,7 @@
-if exists("g:isApexLoaded")
+if exists("g:isCsfApexLoaded")
 	finish
 endif
-let g:isApexLoaded=1 
+let g:isCsfApexLoaded=1 
 function! apex#ApexPMDInternal(path)
 
     let current_path = a:path

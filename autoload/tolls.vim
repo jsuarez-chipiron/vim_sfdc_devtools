@@ -1,10 +1,10 @@
 
-if exists("g:isToolsLoaded")
+if exists("g:isCsfToolsLoaded")
 	finish
 endif
-let g:isToolsLoaded = 1
+let g:isCsfToolsLoaded = 1
 "SOQL{{{
-function! tolls#CsfQuery(query)
+function! tools#CsfQuery(query)
     echo "Running Query..."
     let query = substitute(a:query, "!", "\\\\!", "g")
     silent execute "read !sfdx force:data:soql:query -q \"" . query . "\" -u default"
@@ -12,19 +12,19 @@ function! tolls#CsfQuery(query)
     normal dd
     execute "normal ?Total number\<CR>"
     normal "udd
-    call timer_start(50, {-> execute("call tolls#PrintCsfQueryResult()", "")})
+    call timer_start(50, {-> execute("call tools#PrintCsfQueryResult()", "")})
 endfunction
 
-function! tolls#CsfQueryCmd(query)
+function! tools#CsfQueryCmd(query)
     normal G
-    call tolls#CsfQuery(a:query)
+    call tools#CsfQuery(a:query)
 endfunction
 
-function! tolls#PrintCsfQueryResult()
+function! tools#PrintCsfQueryResult()
     echo getreg("u")
 endfunction
 
-function! tolls#CsfQueryRangeInternal() range
+function! tools#CsfQueryRangeInternal() range
     let i = a:firstline
     let val = ""
     while i <= a:lastline
@@ -32,12 +32,12 @@ function! tolls#CsfQueryRangeInternal() range
         let i += 1
     endwhile
 
-    call tolls#CsfQuery(val)
+    call tools#CsfQuery(val)
 
 endfunction
 "}}}
 "Anonymus {{{
-function! tolls#CsfAnonymousInternal() range
+function! tools#CsfAnonymousInternal() range
     let tempFileName = tempname()
     echo "Executing Apex Anonymous..."
     call writefile(getline(a:firstline, a:lastline), tempFileName)
