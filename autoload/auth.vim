@@ -14,7 +14,7 @@ endfunction
 function! auth#CsfGetUsername()
     let tempFileName = tempname()
     echo "Waiting for authentication..."
-    silent execute "!sfdx force:org:list | grep default | awk '{print $3}' > " .tempFileName
+    execute "!sfdx force:org:list | grep default | awk '{print $3}' > " .tempFileName
     let file = readfile(tempFileName)
     return file[0]
 endfunction
