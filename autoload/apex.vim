@@ -28,6 +28,8 @@ function! apex#ApexPMDCurrentProject()
     call apex#ApexPMDInternal(current_project)
 endfunction
 
+" TODO: when this function will be generic it should be move to a common file
+" instead of the apex
 function! apex#CsfDeployCurrentBuffer()
 	let current_buffer_extension=expand('%:e')
 
@@ -40,4 +42,24 @@ function! apex#CsfDeployCurrentBuffer()
 
     execute "!sfdx force:source:deploy -u default -m ApexClass:" . current_buffer
     echo "Deployed source: " . current_buffer
+endfunction
+
+function! apex#CsfCreateApexClass()
+    let directory = "force-app/main/default/classes/"
+    call inputsave()
+    let className = input('Enter class name: ')
+    call inputrestore()
+    echo "\nDo you want to create the class in the directory \"force-app/main/default/classes/\"?"
+    call inputsave()
+    let flag = input('(y/n): ')
+    call inputrestore()
+    if flag == "n"
+        call inputsave()
+        let directory = input('Enter the directory path: ')
+        call inputrestore()
+    endif
+
+    execute "!sfdx force:apex:class:create -n " . className . " -d " . directory
+
+    echo "Class \"" . className . "\" created on the directory \"" . directory . "\""
 endfunction
