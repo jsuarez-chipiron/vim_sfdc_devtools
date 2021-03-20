@@ -3,6 +3,8 @@ if exists("g:isCsfApexLoaded")
 endif
 
 let g:isCsfApexLoaded=1 
+"Used to add sfdx deploy errors to quicktext
+set efm+=%.%#Error\ \ %f\ \ %m(%l:%.%#
 
 function! apex#ApexPMDInternal(path)
 
@@ -33,15 +35,23 @@ endfunction
 function! apex#CsfDeployCurrentBuffer()
 	let current_buffer_extension=expand('%:e')
 
-    if current_buffer_extension != "cls"
-        echoerr "Unsupported type. Currently only APEX is supported"
-        return
-    endif
+	if current_buffer_extension != "cls"
+		echoerr "Unsupported type. Currently only APEX is supported"
+		return
+	endif
 
 	let current_buffer=expand('%:t:r')
 
-    execute "!sfdx force:source:deploy -u default -m ApexClass:" . current_buffer
-    echo "Deployed source: " . current_buffer
+	echom "Deploying source 🙏: " . current_buffer
+	let current_cmd = "sfdx force:source:deploy -u default -m ApexClass:" . current_buffer . " 2>/dev/null"
+	let res= system(current_cmd) 
+	if v:shell_error ==# "0"
+		echom "Deployed source 😎: " . current_buffer
+	else
+		cgetexpr filter(split(res,"\n"), "v:val =~ 'Error'") 
+		copen
+		echom "Error 😱: " . current_buffer
+	endif
 endfunction
 
 function! apex#CsfCreateApexClass()
