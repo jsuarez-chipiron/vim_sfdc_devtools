@@ -12,10 +12,13 @@ function! auth#CsfLogout()
 endfunction
 
 function! auth#CsfGetUsername()
-    let tempFileName = tempname()
     echo "Waiting for authentication..."
-    execute "!sfdx force:org:list | grep default | awk '{print $3}' > " .tempFileName
-    let file = readfile(tempFileName)
-    return file[0]
+    let res = system("sfdx force:org:list | grep default | awk '{print $3}'")
+
+	if v:shell_error ==# "0"
+        echo res
+	else
+		echom "Error 😱: Authenticating user"
+	endif
 endfunction
 

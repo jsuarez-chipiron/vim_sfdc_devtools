@@ -69,7 +69,14 @@ function! apex#CsfCreateApexClass()
         call inputrestore()
     endif
 
-    execute "!sfdx force:apex:class:create -n " . className . " -d " . directory
+    let cmd = "sfdx force:apex:class:create -n " . className . " -d " . directory
 
-    echo "Class \"" . className . "\" created on the directory \"" . directory . "\""
+    let ret = system(cmd)
+
+	if v:shell_error ==# "0"
+        echo "\nClass \"" . className . "\" created on the directory \"" . directory . "\""
+	else
+		echom "Error 😱: Authenticating user"
+	endif
+
 endfunction
