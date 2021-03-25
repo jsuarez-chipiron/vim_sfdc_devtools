@@ -12,4 +12,5 @@ command!  CsfLoginSandbox call auth#CsfLogin("https://test.salesforce.com")
 command!  CsfLogout call auth#CsfLogout()
 command!  CsfShowUsername echo auth#CsfGetUsername()
 command!  CsfCreateApexClass echo apex#CsfCreateApexClass()
+command!  CsfApexDiff call apex#CsfApexDiff()
 "}}}
