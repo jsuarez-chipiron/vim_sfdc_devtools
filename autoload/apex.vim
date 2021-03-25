@@ -80,3 +80,34 @@ function! apex#CsfCreateApexClass()
 	endif
 
 endfunction
+
+function! apex#CsfApexDiff() range
+
+	let current_buffer_extension=expand('%:e')
+
+	if current_buffer_extension != "cls"
+		echoerr "Unsupported type. Currently only APEX is supported"
+		return
+	endif
+
+	let current_buffer=expand('%:t:r')
+    let tempFileName = tempname()
+
+    call writefile(getline(1, '$'), tempFileName)
+
+    echo tempFileName
+
+	let current_cmd = "sfdx force:source:retrieve -u default -m ApexClass:" . current_buffer . " 2>/dev/null"
+    echom "Retrieving source: " . current_buffer . " for comparation"
+    
+	let res= system(current_cmd) 
+	if v:shell_error ==# "0"
+        silent execute "edit"
+        silent execute "vertical diffsplit " . tempFileName
+	else
+		echom "Error 😱: Comparing " . current_buffer
+	endif
+
+
+endfunction
+
