@@ -7,11 +7,8 @@ let g:isCsfToolsLoaded = 1
 function! tools#CsfQuery(query)
     echo "Running Query..."
     let query = substitute(a:query, "!", "\\\\!", "g")
-    silent execute "read !sfdx force:data:soql:query -q \"" . query . "\" -u default"
-    execute "normal ?Querying Data\<CR>"
-    normal dd
-    execute "normal ?Total number\<CR>"
-    normal "udd
+    silent execute "!sfdx data query --query \"" . query . "\" -o default > /tmp/query_result"
+    silent execute "read /tmp/query_result"
     call timer_start(50, {-> execute("call tools#PrintCsfQueryResult()", "")})
 endfunction
 
