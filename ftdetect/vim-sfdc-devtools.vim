@@ -1,1 +1,1 @@
-au BufRead,BufNewFile *.cls,*.trigger set filetype=apexcode
+au BufRead,BufNewFile *.cls,*.trigger set filetype=apex
