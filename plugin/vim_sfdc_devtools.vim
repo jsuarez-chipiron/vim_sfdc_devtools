@@ -14,4 +14,7 @@ command!  CsfShowUsername call auth#CsfGetUsername()
 command!  CsfCreateApexClass call apex#CsfCreateApexClass()
 command!  CsfDeployCurrentBuffer call apex#CsfDeployCurrentBuffer()
 command!  CsfApexDiff call apex#CsfApexDiff()
+command!  CsfApexPMDCurrentProject call apex#ApexPMDCurrentProject()
+command!  CsfApexPMDBuffer call apex#ApexPMDBuffer()
+command!  CsfApexDiff call apex#CsfApexDiff()
 "}}}
